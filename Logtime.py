@@ -12,20 +12,22 @@ def get_active_window():
 
  return title #return title to main program
 
-
+current_app = get_active_window() #current app being used
 
 
 app_usage = {} #list that tracks app and app usage time
-current_app =get_active_window() #current app being used
 start_time = time.time() # start time
 
-
-
 while True:
-    new_app = get_active_window()
+    new_app = get_active_window() #next application
     if new_app != current_app:
         end_time = time.time()
-        app_usage[current_app] = app_usage.get(current_app, 0) + (end_time - start_time)
-        current_app = new_app
-        print(current_app)
+        curr_run_time = end_time - start_time
+        app_usage[current_app] = app_usage.get(current_app, 0)  + (curr_run_time) #adding timer field at the end
+        x = app_usage.values()       
+        print(x)
         print(app_usage)
+        current_app = new_app
+        time.sleep(1)
+
+    
