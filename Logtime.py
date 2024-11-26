@@ -24,8 +24,6 @@ while True:
      time_step = time.time()
      elapsed_time = time_step - start_time
      print(elapsed_time)
-     #app_usage[current_app] = app_usage.get(current_app, 0) + elapsed_time
-     #print(app_usage)
      time.sleep(0.5)
 
 
