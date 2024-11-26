@@ -2,7 +2,6 @@ import time
 import win32gui
 
 
-
 #get active window
 def get_active_window():
  
@@ -10,24 +9,34 @@ def get_active_window():
  title = win32gui.GetWindowText(window) #turns int into string 
 
 
- return title #return title to main program
+ return title if title.strip() else "Untitled Window" #handle empty titles
 
 current_app = get_active_window() #current app being used
-
-
 app_usage = {} #list that tracks app and app usage time
-start_time = time.time() # start time
+start_time = time.time() # start time of programme
+
+
+
 
 while True:
-    new_app = get_active_window() #next application
-    if new_app != current_app:
-        end_time = time.time()
-        curr_run_time = end_time - start_time
-        app_usage[current_app] = app_usage.get(current_app, 0)  + (curr_run_time) #adding timer field at the end
-        x = app_usage.values()       
-        print(x)
-        print(app_usage)
-        current_app = new_app
-        time.sleep(1)
+  new_app = get_active_window()
+  if new_app != current_app:
+     end_time = time.time()
+     elapsed_time = end_time - start_time
+     app_usage[current_app] = app_usage.get(current_app, 0) + elapsed_time
+     print(app_usage)
+     time.sleep(0.01)
+  else:
+     time_step = time.time()
+     elapsed_time = time_step - start_time
+     print(elapsed_time)
+     #app_usage[current_app] = app_usage.get(current_app, 0) + elapsed_time
+     #print(app_usage)
+     time.sleep(0.5)
+
+     
+ 
+    
+
 
     
