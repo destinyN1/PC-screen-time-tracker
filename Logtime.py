@@ -1,6 +1,7 @@
 import time
 import win32gui
 import pprint
+import copy
 
 
 #get active window
@@ -11,6 +12,15 @@ def get_active_window():
 
 
  return title if title.strip() else "Untitled Window" #handle empty titles
+
+#def apptime(elapsed_time_curr):
+ #   array = []
+  #  array.append(copy.deepcopy(elapsed_time_curr))
+   # return array
+   
+
+
+  
 
 current_app = get_active_window() #current app being used
 app_usage = {} #dictionary that tracks app usage
@@ -26,10 +36,13 @@ while True:
      #calculating elapsed time for current app
      time_step_curr = time.time()
      elapsed_time_curr = time_step_curr - start_time
-     
+
 #add new app to dictionary with elapsed time if it doesnt already exist and increment timer
      app_usage[current_app] = app_usage.setdefault(current_app,elapsed_time_curr) 
      app_usage[current_app] = elapsed_time_curr 
+     
+  
+      
 
 #print all the apps that have been running so far
     
@@ -42,10 +55,19 @@ while True:
      new_app = current_app
 
   elif new_app != current_app:
-    time_step_new = time.time()
-    elapsed_time_new = time_step_new - start_time
-    print(f"elapsed time new: {elapsed_time_new}, {current_app}")
-    time.sleep(0.5)
+    prev_app = current_app
+    #copy.deepcopy(elapsed_time_curr)
+    array = []
+    #array.append(x)
+    #for i in array:
+    #  print(i)
+
+
+
+   # elapsed_time_curr = 0 
+
+   # print(f"elapsed time new: {elapsed_time_new}, {current_app}")
+    time.sleep(0.1)
     current_app = new_app
 
 
