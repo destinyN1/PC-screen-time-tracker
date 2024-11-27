@@ -34,9 +34,7 @@ while True:
   if new_app == current_app:
      
      #calculating elapsed time for current app
-     time_step_curr = time.time()
-     elapsed_time_curr = time_step_curr - start_time
-
+     elapsed_time_curr = time.time() - start_time
 #add new app to dictionary with elapsed time if it doesnt already exist and increment timer
      app_usage[current_app] = app_usage.setdefault(current_app,elapsed_time_curr) 
      app_usage[current_app] = elapsed_time_curr 
@@ -55,8 +53,7 @@ while True:
      new_app = current_app
 
   elif new_app != current_app:
-    prev_app = current_app
-    #copy.deepcopy(elapsed_time_curr)
+    start_time = time.time()
     array = []
     #array.append(x)
     #for i in array:
@@ -67,7 +64,7 @@ while True:
    # elapsed_time_curr = 0 
 
    # print(f"elapsed time new: {elapsed_time_new}, {current_app}")
-    time.sleep(0.1)
+    time.sleep(0.3)
     current_app = new_app
 
 
