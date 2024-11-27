@@ -22,11 +22,16 @@ start_time = time.time() # start time of programme
 while True:
   new_app = get_active_window()
   if new_app == current_app:
+     
      time_step_curr = time.time()
      elapsed_time_curr = time_step_curr - start_time
+
      app_usage[current_app] = app_usage.setdefault(current_app,elapsed_time_curr)
+     app_usage[current_app] = elapsed_time_curr
+
      print(f"elapsed time curr:\n")
      pprint.pprint(app_usage)
+     
      time.sleep(1)
      new_app = current_app
 
