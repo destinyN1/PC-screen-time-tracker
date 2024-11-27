@@ -26,13 +26,16 @@ while True:
      #calculating elapsed time for current app
      time_step_curr = time.time()
      elapsed_time_curr = time_step_curr - start_time
+     
 #add new app to dictionary with elapsed time if it doesnt already exist and increment timer
      app_usage[current_app] = app_usage.setdefault(current_app,elapsed_time_curr) 
      app_usage[current_app] = elapsed_time_curr 
 
 #print all the apps that have been running so far
+    
      print(f"Apps that have run:\n")
      pprint.pprint(app_usage) 
+     print("\n")
 
 #suspend program for 500ms to not overload CPU
      time.sleep(0.5)
