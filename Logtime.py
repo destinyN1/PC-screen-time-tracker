@@ -1,7 +1,7 @@
 import time
 import win32gui
 import pprint
-import copy
+
 
 
 #get active window
@@ -33,7 +33,7 @@ while True:
      elapsed_time_curr = time.time() - start_time
 #add new app to dictionary with elapsed time if it doesnt already exist and increment timer
      app_usage[current_app] = app_usage.setdefault(current_app,elapsed_time_curr) 
-     app_usage[current_app] = app_usage.get(current_app,0) + 0.3 
+     app_usage[current_app] = app_usage.get(current_app,0) + 1
      
      
 #print all the apps that have been running so far
@@ -45,7 +45,7 @@ while True:
      
 
 #suspend program for 300ms to not overload CPU
-     time.sleep(0.3)
+     time.sleep(1)
      toc = time.perf_counter()
  
 
