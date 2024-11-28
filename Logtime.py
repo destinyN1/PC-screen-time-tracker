@@ -54,14 +54,3 @@ while True:
     start_time = time.time()
     time.sleep(0.3)
     current_app = new_app
-
-
-  
-
-
-     
- 
-    
-
-
-    
