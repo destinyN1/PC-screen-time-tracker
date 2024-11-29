@@ -52,5 +52,5 @@ while True:
 #app switching logic
   elif new_app != current_app:
     start_time = time.time()
-    time.sleep(0.3)
+    time.sleep(0.05)
     current_app = new_app
