@@ -53,10 +53,13 @@ def screentime(app_usage,start_time,current_app, app_counts, k, app_usage_f):
 
       print(f"Apps that have run:\n")
       pprint.pprint(app_usage) 
-      print("\n")
+      print('\n')
+      print("Amount of times app has run:\n")
       pprint.pprint(app_counts)
       print('\n')
+      print("Formatted strings for further processing:\n")
       pprint.pprint(app_usage_f)
+      print('-----------------------------')
 
       FormatData(app_usage)
 
@@ -78,7 +81,7 @@ def screentime(app_usage,start_time,current_app, app_counts, k, app_usage_f):
 
 
 
- 
+
 def FormatData(app_usage):
  x = list(app_usage.keys())
  y = [s.split("-")[-1] for s in x]
