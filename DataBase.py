@@ -11,7 +11,7 @@ with sqlite3.connect('screentime') as connection:
      id INTEGER PRIMARY KEY AUTOINCREMENT,
      app_name TEXT NOT NULL,
      total_duration FLOAT NOT NULL,
-     current_duration
+     last_session FLOAT 
      FIRST_TIME_CLOSED INTEGER, 
      last_closed INTEGER,
      times_opened INTEGER

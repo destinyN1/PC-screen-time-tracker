@@ -11,8 +11,9 @@ def main():
  app_usage = {} #dictionary that tracks app usage
  start_time = time.time() # start time of programme
  app_counts = {}
+ app_usage_f = {}
 
- screentime(app_usage,start_time,current_app,app_counts, k)
+ screentime(app_usage,start_time,current_app,app_counts, k,app_usage_f)
 
 
 
@@ -26,12 +27,7 @@ def get_active_window():
  return title if title.strip() else "Untitled Window" #handle empty titles
 
 
-   
-
-
-
-
-def screentime(app_usage,start_time,current_app, app_counts, k):
+def screentime(app_usage,start_time,current_app, app_counts, k, app_usage_f):
 
  while True:
    new_app = get_active_window()
@@ -53,6 +49,10 @@ def screentime(app_usage,start_time,current_app, app_counts, k):
       pprint.pprint(app_usage) 
       print("\n")
       pprint.pprint(app_counts)
+      print('\n')
+      print(app_usage_f)
+
+
       
      
 #suspend program for 300ms to not overload CPU
@@ -72,8 +72,12 @@ def screentime(app_usage,start_time,current_app, app_counts, k):
 
 
  
-def FormatData(app_usage):
- app_usage_f = copy.deepcopy(app_usage)
+#def FormatData(app_usage):
+ #app_usage_f = app_usage.keys()
+ #screentime(app_usage_f)
+
+
+
 
 
      
