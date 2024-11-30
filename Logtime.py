@@ -27,6 +27,10 @@ def get_active_window():
  return title if title.strip() else "Untitled Window" #handle empty titles
 
 
+   
+
+
+
 def screentime(app_usage,start_time,current_app, app_counts, k, app_usage_f):
 
  while True:
@@ -44,14 +48,17 @@ def screentime(app_usage,start_time,current_app, app_counts, k, app_usage_f):
        app_counts[current_app] = app_usage.setdefault(current_app,0)
        app_counts[current_app] = 0
 #print all the apps that have been running so far
-    
+     
+      app_usage_f = FormatData(app_usage)
+
       print(f"Apps that have run:\n")
       pprint.pprint(app_usage) 
       print("\n")
       pprint.pprint(app_counts)
       print('\n')
-      print(app_usage_f)
+      pprint.pprint(app_usage_f)
 
+      FormatData(app_usage)
 
       
      
@@ -72,9 +79,10 @@ def screentime(app_usage,start_time,current_app, app_counts, k, app_usage_f):
 
 
  
-#def FormatData(app_usage):
- #app_usage_f = app_usage.keys()
- #screentime(app_usage_f)
+def FormatData(app_usage):
+ x = list(app_usage.keys())
+ y = [s.split("-")[-1] for s in x]
+ return y
 
 
 
