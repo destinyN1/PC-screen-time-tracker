@@ -9,11 +9,12 @@ with sqlite3.connect('screentime') as connection:
  create_table_query = '''
  CREATE TABLE IF NOT EXISTS Screentime (
      id INTEGER PRIMARY KEY AUTOINCREMENT,
-     appname TEXT NOT NULL,
-     duration FLOAT NOT NULL,
+     app_name TEXT NOT NULL,
+     total_duration FLOAT NOT NULL,
+     current_duration
      FIRST_TIME_CLOSED INTEGER, 
-     LAST_CLOSED INTEGER,
-     TIMES_OPENED INTEGER
+     last_closed INTEGER,
+     times_opened INTEGER
  );
 '''
  cursor.execute(create_table_query)
