@@ -113,8 +113,8 @@ def FormatData(app_usage):
 
  
     
-
- no_dupes_last= list(set(last_string)) #getting rid of duplicates 
+#getting rid of duplicates 
+ no_dupes_last= list(set(last_string)) 
  no_dupes_second_last = list(set(second_last_string_array))
 
  return no_dupes_last, no_dupes_second_last
