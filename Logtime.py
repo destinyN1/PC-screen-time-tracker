@@ -3,7 +3,7 @@ import win32gui
 import pprint
 import copy
 
-k =1
+k =0
 
 def main():
  
@@ -62,7 +62,6 @@ def screentime(app_usage,start_time,current_app, app_counts, k, app_usage_f):
       print('-----------------------------')
 
       FormatData(app_usage)
-
       
      
 #suspend program for 300ms to not overload CPU
@@ -83,10 +82,35 @@ def screentime(app_usage,start_time,current_app, app_counts, k, app_usage_f):
 
 
 def FormatData(app_usage):
+ 
+ second_last_string_array = []
+
  keys = list(app_usage.keys()) #getting list of apps
- last_string = [s.split("-")[-1] for s in keys] #last string in the list 
- no_dupes= list(set(last_string)) #getting rid of duplicates 
- return no_dupes
+ last_string = [s.split("-")[-1] for s in keys] #last string in the list
+
+ x = [t.split("-") for t in keys]
+
+#conditions for apps with names shorter than 3 strings
+
+ for list_of_strings in x: #gives a list of the strings in the bigger list
+  
+  if len(list_of_strings) == 2: 
+   second_last_string = list_of_strings[0]
+
+  elif len(list_of_strings) == 3:
+   second_last_string = list_of_strings[1]
+
+  elif len(list_of_strings) == 1:
+   second_last_string = list_of_strings[0]
+
+  second_last_string_array.append(second_last_string)
+
+ 
+    
+
+ no_dupes_last= list(set(last_string)) #getting rid of duplicates 
+ no_dupes_second_last = list(set(second_last_string_array))
+ return no_dupes_last, no_dupes_second_last
 
 
 
