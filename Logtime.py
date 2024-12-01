@@ -83,9 +83,10 @@ def screentime(app_usage,start_time,current_app, app_counts, k, app_usage_f):
 
 
 def FormatData(app_usage):
- x = list(app_usage.keys())
- y = [s.split("-")[-1] for s in x]
- return y
+ keys = list(app_usage.keys()) #getting list of apps
+ last_string = [s.split("-")[-1] for s in keys] #last string in the list 
+ no_dupes= list(set(last_string)) #getting rid of duplicates 
+ return no_dupes
 
 
 
