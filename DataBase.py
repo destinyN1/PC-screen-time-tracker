@@ -12,7 +12,7 @@ with sqlite3.connect('screentime') as connection:
      app_name TEXT NOT NULL,                    
      app_name_subset TEXT,
      total_duration FLOAT NOT NULL,
-     last_session FLOAT NOT NULL
+     last_session FLOAT NOT NULL,
      first_time_opened INTEGER NOT NULL,  
      times_opened INTEGER NOT NULL
  );
