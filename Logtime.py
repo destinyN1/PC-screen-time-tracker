@@ -53,6 +53,7 @@ def screentime(app_usage,start_time,current_app, app_counts, k, app_usage_last_w
       app_usage_last_word = FormatData(app_usage)[0]
       app_usage_second_last_word = FormatData(app_usage)[1]
 
+
       print(f"Apps that have run:\n")
       pprint.pprint(app_usage) 
       print('\n')
@@ -67,6 +68,8 @@ def screentime(app_usage,start_time,current_app, app_counts, k, app_usage_last_w
 
       print('-----------------------------')
 
+      LastSession(app_usage)
+
       FormatData(app_usage)
       
      
@@ -77,6 +80,7 @@ def screentime(app_usage,start_time,current_app, app_counts, k, app_usage_last_w
 #app switching logic
    elif new_app != current_app:
     
+
     app_counts[current_app] = app_counts[current_app] + 1 
    
     start_time = time.time()
@@ -86,6 +90,10 @@ def screentime(app_usage,start_time,current_app, app_counts, k, app_usage_last_w
 
 
 
+def LastSession(app_usage):
+    
+
+ return
 
 def FormatData(app_usage):
  
