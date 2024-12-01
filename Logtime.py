@@ -11,9 +11,10 @@ def main():
  app_usage = {} #dictionary that tracks app usage
  start_time = time.time() # start time of programme
  app_counts = {}
- app_usage_f = {}
+ app_usage_last_word = {}
+ app_usage_second_last_word = {}
 
- screentime(app_usage,start_time,current_app,app_counts, k,app_usage_f)
+ screentime(app_usage,start_time,current_app,app_counts, k,app_usage_last_word,app_usage_second_last_word)
 
 
 
@@ -31,7 +32,7 @@ def get_active_window():
 
 
 
-def screentime(app_usage,start_time,current_app, app_counts, k, app_usage_f):
+def screentime(app_usage,start_time,current_app, app_counts, k, app_usage_last_word, app_usage_second_last_word):
 
  while True:
    new_app = get_active_window()
@@ -49,7 +50,8 @@ def screentime(app_usage,start_time,current_app, app_counts, k, app_usage_f):
        app_counts[current_app] = 0
 #print all the apps that have been running so far
      
-      app_usage_f = FormatData(app_usage)
+      app_usage_last_word = FormatData(app_usage)[0]
+      app_usage_second_last_word = FormatData(app_usage)[1]
 
       print(f"Apps that have run:\n")
       pprint.pprint(app_usage) 
@@ -58,7 +60,11 @@ def screentime(app_usage,start_time,current_app, app_counts, k, app_usage_f):
       pprint.pprint(app_counts)
       print('\n')
       print("Formatted strings for further processing:\n")
-      pprint.pprint(app_usage_f)
+      pprint.pprint(app_usage_last_word)
+      print('\n')
+      pprint.pprint(app_usage_second_last_word)
+
+
       print('-----------------------------')
 
       FormatData(app_usage)
@@ -110,6 +116,7 @@ def FormatData(app_usage):
 
  no_dupes_last= list(set(last_string)) #getting rid of duplicates 
  no_dupes_second_last = list(set(second_last_string_array))
+
  return no_dupes_last, no_dupes_second_last
 
 
