@@ -1,23 +1,24 @@
 import time
 import win32gui
 import pprint
-import copy
 from datetime import datetime, timezone
 
-k =0
-last_active = {}
-first_active = {}
+last_active = {} #when was the app last active
+first_active = {} #when was the app first active
+app_usage = {} #dictionary that tracks app usage
+start_time = time.time() # start time of programme
+app_counts = {} #how many times has has the app been opened
+
+#main program and sub program
+app_usage_last_word = {}
+app_usage_second_last_word = {}
+
 
 def main():
- 
  current_app = get_active_window() #current app being used
- app_usage = {} #dictionary that tracks app usage
- start_time = time.time() # start time of programme
- app_counts = {}
- app_usage_last_word = {}
- app_usage_second_last_word = {}
 
- screentime(app_usage,start_time,current_app,app_counts, k,app_usage_last_word,app_usage_second_last_word)
+
+ screentime(current_app,start_time)
 
 
 
@@ -27,15 +28,11 @@ def get_active_window():
  window = win32gui.GetForegroundWindow() #current window encoded as int
  title = win32gui.GetWindowText(window) #turns int into string 
 
-
  return title if title.strip() else "Untitled Window" #handle empty titles
 
 
-   
 
-
-
-def screentime(app_usage,start_time,current_app, app_counts, k, app_usage_last_word, app_usage_second_last_word):
+def screentime(current_app,start_time):
 
  while True:
    new_app = get_active_window()
@@ -60,54 +57,27 @@ def screentime(app_usage,start_time,current_app, app_counts, k, app_usage_last_w
       last_active = LastSession(app_usage,current_app)
       first_active = FirstSesion(app_usage,current_app)
 
-
-      print(f"Apps that have run:\n")
-      pprint.pprint(app_usage) 
-      print('\n')
-      print("Amount of times app has run:\n")
-      pprint.pprint(app_counts)
-      print('\n')
-      print("Formatted strings for further processing:\n")
-      pprint.pprint(app_usage_last_word)
-      print('\n')
-      pprint.pprint(app_usage_second_last_word)
-      print('\n')
-      print("Last time an app was active:\n")
-      pprint.pprint(last_active)
-      print('\n')
-      print("Last time an app was active:\n")
-      pprint.pprint(first_active)
-
-
-
-
-
-      print('-----------------------------')
-      pprint.pprint(first_active)
-
+      #print for debugging 
+      printf(app_usage, app_counts, app_usage_last_word,app_usage_second_last_word,last_active,first_active)
       
       FormatData(app_usage)
       
-     
 #suspend program for 1000ms to not overload CPU
       time.sleep(1)
  
-
 #app switching logic
    elif new_app != current_app:
     
-
+    #counting times current app has been switched
     app_counts[current_app] = app_counts[current_app] + 1 
 
-   
-    
 
     start_time = time.time()
     time.sleep(0.05)
     current_app = new_app
 
 
-
+#getting the last time from when an app was active
 def LastSession(app_usage,current_app):
  
  logtime = str(datetime.now(timezone.utc))
@@ -117,8 +87,8 @@ def LastSession(app_usage,current_app):
  return last_active
 
 
-
-def FirstSesion(app_usage,current_app):
+#getting first time an app has been opened
+def FirstSesion(current_app):
  
  logtime = str(datetime.now(timezone.utc))
 
@@ -129,7 +99,7 @@ def FirstSesion(app_usage,current_app):
  return first_active
 
 
-
+#formatting data to extract main program and sub program
 def FormatData(app_usage):
  
  second_last_string_array = []
@@ -163,7 +133,25 @@ def FormatData(app_usage):
  return no_dupes_last, no_dupes_second_last
 
 
-
+def printf(app_usage, app_counts, app_usage_last_word,app_usage_second_last_word,last_active,first_active):
+  print(f"Apps that have run:\n")
+  pprint.pprint(app_usage) 
+  print('\n')
+  print("Amount of times app has run:\n")
+  pprint.pprint(app_counts)
+  print('\n')
+  print("Main Program:\n")
+  pprint.pprint(app_usage_last_word)
+  print('\n')
+  print("Sub program: \n")
+  pprint.pprint(app_usage_second_last_word)
+  print('\n')
+  print("Last time an app was active:\n")
+  pprint.pprint(last_active)
+  print('\n')
+  print("Last time an app was active:\n")
+  pprint.pprint(first_active)
+  print('-----------------------------')
 
 
      
