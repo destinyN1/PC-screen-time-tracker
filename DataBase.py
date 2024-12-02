@@ -25,9 +25,7 @@ with sqlite3.connect('screentime') as connection:
  print("Table 'Screen time' createed succesfully")
 
 
-#App_name,app_name_subset,times_opened, total_duration - DONE
+#App_name,app_name_subset,times_opened, total_duration, last_session - first_time_opened - DONE
 
-#when was the last session - last_session
-#first time opened - first_time_opened
 
 

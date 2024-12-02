@@ -6,6 +6,8 @@ from datetime import datetime, timezone
 
 k =0
 last_active = {}
+first_active = {}
+
 def main():
  
  current_app = get_active_window() #current app being used
@@ -55,9 +57,8 @@ def screentime(app_usage,start_time,current_app, app_counts, k, app_usage_last_w
       app_usage_second_last_word = FormatData(app_usage)[1]
       
       #Last time an app was active
-      logtime = str(datetime.now(timezone.utc))
-      last_active[current_app] = app_usage.setdefault(current_app,logtime)
-      last_active.update({current_app:logtime})
+      last_active = LastSession(app_usage,current_app)
+      first_active = FirstSesion(app_usage,current_app)
 
 
       print(f"Apps that have run:\n")
@@ -73,26 +74,22 @@ def screentime(app_usage,start_time,current_app, app_counts, k, app_usage_last_w
       print('\n')
       print("Last time an app was active:\n")
       pprint.pprint(last_active)
+      print('\n')
+      print("Last time an app was active:\n")
+      pprint.pprint(first_active)
+
 
 
 
 
       print('-----------------------------')
+      pprint.pprint(first_active)
 
       
-
-      pprint.pprint(keys_date)
-
-      '''
-      date_string =  datetime.now(timezone.utc)
-      string = str(date_string)
-      print(type(string))
-      print(string)
-      '''
       FormatData(app_usage)
       
      
-#suspend program for 300ms to not overload CPU
+#suspend program for 1000ms to not overload CPU
       time.sleep(1)
  
 
@@ -111,14 +108,26 @@ def screentime(app_usage,start_time,current_app, app_counts, k, app_usage_last_w
 
 
 
-
- 
-
-
 def LastSession(app_usage,current_app):
+ 
+ logtime = str(datetime.now(timezone.utc))
+ last_active[current_app] = app_usage.setdefault(current_app,logtime)
+ last_active.update({current_app:logtime})
+ 
+ return last_active
 
-    
- return keys_date
+
+
+def FirstSesion(app_usage,current_app):
+ 
+ logtime = str(datetime.now(timezone.utc))
+
+ if current_app not in first_active:
+  first_active[current_app] = logtime
+
+
+ return first_active
+
 
 
 def FormatData(app_usage):
