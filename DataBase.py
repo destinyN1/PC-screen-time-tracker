@@ -8,13 +8,12 @@ with sqlite3.connect('screentime') as connection:
 
  create_table_query = '''
  CREATE TABLE IF NOT EXISTS Screentime (
-     id INTEGER PRIMARY KEY AUTOINCREMENT,
-     app_name TEXT NOT NULL,                    
+     app_name TEXT PRIMARY KEY,                    
      app_name_subset TEXT,
-     total_duration FLOAT NOT NULL,
-     last_session FLOAT NOT NULL,
-     first_time_opened INTEGER NOT NULL,  
-     times_opened INTEGER NOT NULL
+     total_duration REAL NOT NULL,
+     last_session TEXT,
+     first_time_opened TEXT,  
+     times_opened INTEGER
  );
 '''
 
@@ -28,4 +27,10 @@ with sqlite3.connect('screentime') as connection:
 #App_name,app_name_subset,times_opened, total_duration, last_session - first_time_opened - DONE
 
 
+def update_db(app_name, app_name_subset, total_duration,last_session,first_time_opened,times_opened):
 
+ conn = sqlite3.connect(f'screentime')
+ cursor = conn.cursor()
+ cursor.execute(
+  
+ )
