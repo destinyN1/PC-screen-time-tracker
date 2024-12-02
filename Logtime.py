@@ -2,9 +2,10 @@ import time
 import win32gui
 import pprint
 import copy
+from datetime import datetime, timezone
 
 k =0
-
+last_active = {}
 def main():
  
  current_app = get_active_window() #current app being used
@@ -48,10 +49,15 @@ def screentime(app_usage,start_time,current_app, app_counts, k, app_usage_last_w
       if current_app not in app_counts:
        app_counts[current_app] = app_usage.setdefault(current_app,0)
        app_counts[current_app] = 0
-#print all the apps that have been running so far
-     
+
+      #Get the last word and second last word from title string     
       app_usage_last_word = FormatData(app_usage)[0]
       app_usage_second_last_word = FormatData(app_usage)[1]
+      
+      #Last time an app was active
+      logtime = str(datetime.now(timezone.utc))
+      last_active[current_app] = app_usage.setdefault(current_app,logtime)
+      last_active.update({current_app:logtime})
 
 
       print(f"Apps that have run:\n")
@@ -64,12 +70,25 @@ def screentime(app_usage,start_time,current_app, app_counts, k, app_usage_last_w
       pprint.pprint(app_usage_last_word)
       print('\n')
       pprint.pprint(app_usage_second_last_word)
+      print('\n')
+      print("Last time an app was active:\n")
+      pprint.pprint(last_active)
+
+
 
 
       print('-----------------------------')
 
-      LastSession(app_usage)
+      
 
+      pprint.pprint(keys_date)
+
+      '''
+      date_string =  datetime.now(timezone.utc)
+      string = str(date_string)
+      print(type(string))
+      print(string)
+      '''
       FormatData(app_usage)
       
      
@@ -82,7 +101,10 @@ def screentime(app_usage,start_time,current_app, app_counts, k, app_usage_last_w
     
 
     app_counts[current_app] = app_counts[current_app] + 1 
+
    
+    
+
     start_time = time.time()
     time.sleep(0.05)
     current_app = new_app
@@ -90,10 +112,14 @@ def screentime(app_usage,start_time,current_app, app_counts, k, app_usage_last_w
 
 
 
-def LastSession(app_usage):
-    
+ 
 
- return
+
+def LastSession(app_usage,current_app):
+
+    
+ return keys_date
+
 
 def FormatData(app_usage):
  
