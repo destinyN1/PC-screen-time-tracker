@@ -55,13 +55,11 @@ def screentime(current_app,start_time):
       
       #Last time an app was active
       last_active = LastSession(app_usage,current_app)
-      first_active = FirstSesion(app_usage,current_app)
+      first_active = FirstSesion(current_app)
 
       #print for debugging 
       printf(app_usage, app_counts, app_usage_last_word,app_usage_second_last_word,last_active,first_active)
-      
-      FormatData(app_usage)
-      
+            
 #suspend program for 1000ms to not overload CPU
       time.sleep(1)
  
