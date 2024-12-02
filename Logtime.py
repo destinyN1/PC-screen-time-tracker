@@ -3,6 +3,8 @@ import win32gui
 import pprint
 from datetime import datetime, timezone
 
+
+
 last_active = {} #when was the app last active
 first_active = {} #when was the app first active
 app_usage = {} #dictionary that tracks app usage
@@ -69,7 +71,6 @@ def screentime(current_app,start_time):
     #counting times current app has been switched
     app_counts[current_app] = app_counts[current_app] + 1 
 
-
     start_time = time.time()
     time.sleep(0.05)
     current_app = new_app
@@ -133,24 +134,35 @@ def FormatData(app_usage):
 
 def printf(app_usage, app_counts, app_usage_last_word,app_usage_second_last_word,last_active,first_active):
   print(f"Apps that have run:\n")
-  pprint.pprint(app_usage) 
+  safe_pprint.pprint(app_usage) 
   print('\n')
   print("Amount of times app has run:\n")
-  pprint.pprint(app_counts)
+  safe_pprint.pprint(app_counts)
   print('\n')
   print("Main Program:\n")
-  pprint.pprint(app_usage_last_word)
+  safe_pprint.pprint(app_usage_last_word)
   print('\n')
   print("Sub program: \n")
-  pprint.pprint(app_usage_second_last_word)
+  safe_pprint.pprint(app_usage_second_last_word)
   print('\n')
   print("Last time an app was active:\n")
-  pprint.pprint(last_active)
+  safe_pprint.pprint(last_active)
   print('\n')
-  print("Last time an app was active:\n")
-  pprint.pprint(first_active)
+  print("First time an app was active:\n")
+  safe_pprint.pprint(first_active)
   print('-----------------------------')
 
+
+
+#Handles titles that dont have standard ASCII values
+class SafePrettyPrinter(pprint.PrettyPrinter):
+    def format(self, obj, context, maxlevels, level):
+        if isinstance(obj, str):
+            obj = obj.encode('ascii', 'replace').decode('ascii')  # Replace unsupported characters
+        return super().format(obj, context, maxlevels, level)
+
+# Instantiate SafePrettyPrinter
+safe_pprint = SafePrettyPrinter() 
 
      
 if __name__ == "__main__":
