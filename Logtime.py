@@ -6,7 +6,7 @@ from DataBase import init_db, update_db
 import json
 
 
-
+durmainapp = {}
 last_active = {} #when was the app last active
 first_active = {} #when was the app first active
 app_usage = {} #dictionary that tracks app usage
@@ -68,10 +68,11 @@ def screentime(current_app,start_time):
       printf(app_usage, app_counts, app_usage_last_word,app_usage_second_last_word,last_active,first_active)
 
 
-      last_string = FormatData(app_usage)[3]
-      second_last_string = FormatData(app_usage)[2]
+      #last_string = FormatData(app_usage)[3]
+     # second_last_string = FormatData(app_usage)[2]
 
-      ToJson(current_app, last_string, second_last_string)
+      #ToJson(current_app, last_string, second_last_string)
+      #DurMainApp(last_string,app_usage)
  
 
             
@@ -113,6 +114,20 @@ def FirstSesion(current_app):
  return first_active
 
 
+
+def DurMainApp(last_string,app_usage):
+ 
+ search_key = last_string
+
+ values = [val for key, val in app_usage.items() if search_key in key  ]  
+
+ print(sum(values))
+ 
+   
+ 
+ 
+ 
+
 #formatting data to extract main program and sub program
 def FormatData(app_usage):
  
@@ -120,8 +135,7 @@ def FormatData(app_usage):
 
  keys = list(app_usage.keys()) #getting list of apps
  last_string = [s.split("-")[-1] for s in keys] #last string in the list
- 
- last_string = last_string[0]
+
 
  x = [t.split("-") for t in keys]
 
@@ -147,8 +161,7 @@ def FormatData(app_usage):
  no_dupes_second_last_list = list(set(second_last_string_array))
 
 
- return no_dupes_last_list, no_dupes_second_last_list, second_last_string, last_string
-
+ return no_dupes_last_list, no_dupes_second_last_list, second_last_string
 
 def printf(app_usage, app_counts, app_usage_last_word,app_usage_second_last_word,last_active,first_active):
   print(f"Apps that have run:\n")
@@ -178,7 +191,9 @@ def ToJson(current_app, last_string, second_last_string):
     "window": current_app,  
     "main app": last_string,
     "sub app": second_last_string,
-    "total_duration": app_usage[current_app],
+    "total_duration - window": app_usage[current_app],
+    "total_duation - main app"
+    "total_duration sub app"
     "first active": first_active[current_app],
     "last active": last_active[current_app],
     "times opened": app_counts[current_app]
