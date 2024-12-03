@@ -61,14 +61,10 @@ def screentime(current_app,start_time):
       last_active = LastSession(app_usage,current_app)
       first_active = FirstSesion(current_app)
       
-
-    
-  
       #print for debugging 
       printf(app_usage, app_counts, app_usage_last_word,app_usage_second_last_word,last_active,first_active)
 
 
-     
       last_word = FormatData(current_app,app_usage,k)[3]
       second_last_word = FormatData(current_app, app_usage,k)[2]
      
@@ -97,6 +93,10 @@ def screentime(current_app,start_time):
     current_app = new_app
 
 
+
+
+
+
 #getting the last time from when an app was active
 def LastSession(app_usage,current_app):
  
@@ -105,6 +105,9 @@ def LastSession(app_usage,current_app):
  last_active.update({current_app:logtime})
  
  return last_active
+
+
+
 
 
 #getting first time an app has been opened
@@ -120,6 +123,8 @@ def FirstSesion(current_app):
 
 
 
+
+
 def DurMainApp(last_string,app_usage):
  
  search_key = last_string
@@ -132,6 +137,9 @@ def DurMainApp(last_string,app_usage):
  
  
  
+
+
+
 
 #formatting data to extract main program and sub program
 def FormatData(current_app, app_usage, k):
@@ -172,21 +180,20 @@ def FormatData(current_app, app_usage, k):
  main_app = splitter[2]
  
 
- 
-
-   
-
-
-
- 
- 
     
 #getting rid of duplicates 
  no_dupes_last_list= list(set(last_string_list)) 
  no_dupes_second_last_list = list(set(second_last_string_array))
 
-
  return no_dupes_last_list, no_dupes_second_last_list, second_last_word, last_word, sub_app, main_app
+
+
+
+
+
+
+
+
 
 def printf(app_usage, app_counts, app_usage_last_word,app_usage_second_last_word,last_active,first_active):
   print(f"Apps that have run:\n")
@@ -208,6 +215,11 @@ def printf(app_usage, app_counts, app_usage_last_word,app_usage_second_last_word
   safe_pprint.pprint(first_active)
   print('-----------------------------')
 
+
+
+
+
+
 #converts the current app's parameters into a JSON dictionary file
 def ToJson(current_app, last_word, second_last_word,sub_app,main_app):
  
@@ -228,6 +240,11 @@ def ToJson(current_app, last_word, second_last_word,sub_app,main_app):
  per_appdata_json= json.dumps(per_appdata, indent = 4 ) 
 
  print(per_appdata_json)
+
+
+
+
+
 
 #Handles titles that dont have standard ASCII values
 class SafePrettyPrinter(pprint.PrettyPrinter):
