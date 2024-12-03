@@ -2,6 +2,7 @@ import time
 import win32gui
 import pprint
 from datetime import datetime, timezone
+from DataBase import init_db, update_db
 
 
 
@@ -58,9 +59,16 @@ def screentime(current_app,start_time):
       #Last time an app was active
       last_active = LastSession(app_usage,current_app)
       first_active = FirstSesion(current_app)
+      
 
+
+  
       #print for debugging 
       printf(app_usage, app_counts, app_usage_last_word,app_usage_second_last_word,last_active,first_active)
+
+
+ 
+
             
 #suspend program for 1000ms to not overload CPU
       time.sleep(1)
@@ -70,6 +78,8 @@ def screentime(current_app,start_time):
     
     #counting times current app has been switched
     app_counts[current_app] = app_counts[current_app] + 1 
+
+
 
     start_time = time.time()
     time.sleep(0.05)
@@ -129,6 +139,7 @@ def FormatData(app_usage):
  no_dupes_last= list(set(last_string)) 
  no_dupes_second_last = list(set(second_last_string_array))
 
+
  return no_dupes_last, no_dupes_second_last
 
 
@@ -166,4 +177,5 @@ safe_pprint = SafePrettyPrinter()
 
      
 if __name__ == "__main__":
+ #init_db()
  main()
