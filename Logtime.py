@@ -68,10 +68,10 @@ def screentime(current_app,start_time):
       printf(app_usage, app_counts, app_usage_last_word,app_usage_second_last_word,last_active,first_active)
 
 
-      #last_string = FormatData(app_usage)[3]
-     # second_last_string = FormatData(app_usage)[2]
-
-      #ToJson(current_app, last_string, second_last_string)
+     
+      last_word = FormatData(app_usage)[3]
+      second_last_word = FormatData(app_usage)[2]
+      ToJson(current_app, last_word, second_last_word)
       #DurMainApp(last_string,app_usage)
  
 
@@ -134,7 +134,7 @@ def FormatData(app_usage):
  second_last_string_array = []
 
  keys = list(app_usage.keys()) #getting list of apps
- last_string = [s.split("-")[-1] for s in keys] #last string in the list
+ last_string_list = [s.split("-")[-1] for s in keys] #last string in the list
 
 
  x = [t.split("-") for t in keys]
@@ -154,14 +154,21 @@ def FormatData(app_usage):
 
   second_last_string_array.append(second_last_string)
 
+
+  #get the last element from the word arrays for JSON formatting
+  last_word = last_string_list[-1]
+  second_last_word = second_last_string_array[-1]
+
+
+
  
     
 #getting rid of duplicates 
- no_dupes_last_list= list(set(last_string)) 
+ no_dupes_last_list= list(set(last_string_list)) 
  no_dupes_second_last_list = list(set(second_last_string_array))
 
 
- return no_dupes_last_list, no_dupes_second_last_list, second_last_string
+ return no_dupes_last_list, no_dupes_second_last_list, second_last_word, last_word
 
 def printf(app_usage, app_counts, app_usage_last_word,app_usage_second_last_word,last_active,first_active):
   print(f"Apps that have run:\n")
@@ -184,13 +191,13 @@ def printf(app_usage, app_counts, app_usage_last_word,app_usage_second_last_word
   print('-----------------------------')
 
 #converts the current app's parameters into a JSON dictionary file
-def ToJson(current_app, last_string, second_last_string):
+def ToJson(current_app, last_word, second_last_word):
  
  per_appdata ={
    
     "window": current_app,  
-    "main app": last_string,
-    "sub app": second_last_string,
+    "main app": last_word,
+    "sub app": second_last_word,
     "total_duration - window": app_usage[current_app],
     "total_duation - main app"
     "total_duration sub app"
