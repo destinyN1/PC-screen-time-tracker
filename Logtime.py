@@ -3,6 +3,7 @@ import win32gui
 import pprint
 from datetime import datetime, timezone
 from DataBase import init_db, update_db
+import json
 
 
 
@@ -61,12 +62,16 @@ def screentime(current_app,start_time):
       first_active = FirstSesion(current_app)
       
 
-
+    
   
       #print for debugging 
       printf(app_usage, app_counts, app_usage_last_word,app_usage_second_last_word,last_active,first_active)
 
 
+      last_string = FormatData(app_usage)[3]
+      second_last_string = FormatData(app_usage)[2]
+
+      ToJson(current_app, last_string, second_last_string)
  
 
             
@@ -115,6 +120,8 @@ def FormatData(app_usage):
 
  keys = list(app_usage.keys()) #getting list of apps
  last_string = [s.split("-")[-1] for s in keys] #last string in the list
+ 
+ last_string = last_string[0]
 
  x = [t.split("-") for t in keys]
 
@@ -136,11 +143,11 @@ def FormatData(app_usage):
  
     
 #getting rid of duplicates 
- no_dupes_last= list(set(last_string)) 
- no_dupes_second_last = list(set(second_last_string_array))
+ no_dupes_last_list= list(set(last_string)) 
+ no_dupes_second_last_list = list(set(second_last_string_array))
 
 
- return no_dupes_last, no_dupes_second_last
+ return no_dupes_last_list, no_dupes_second_last_list, second_last_string, last_string
 
 
 def printf(app_usage, app_counts, app_usage_last_word,app_usage_second_last_word,last_active,first_active):
@@ -163,7 +170,23 @@ def printf(app_usage, app_counts, app_usage_last_word,app_usage_second_last_word
   safe_pprint.pprint(first_active)
   print('-----------------------------')
 
+#converts the current app's parameters into a JSON dictionary file
+def ToJson(current_app, last_string, second_last_string):
+ 
+ per_appdata ={
+   
+    "window": current_app,  
+    "main app": last_string,
+    "sub app": second_last_string,
+    "total_duration": app_usage[current_app],
+    "first active": first_active[current_app],
+    "last active": last_active[current_app],
+    "times opened": app_counts[current_app]
+}
 
+ per_appdata_json= json.dumps(per_appdata, indent = 4 ) 
+
+ print(per_appdata_json)
 
 #Handles titles that dont have standard ASCII values
 class SafePrettyPrinter(pprint.PrettyPrinter):
