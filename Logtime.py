@@ -5,7 +5,7 @@ from datetime import datetime, timezone
 from DataBase import init_db, update_db
 import json
 
-
+k = 1
 durmainapp = {}
 last_active = {} #when was the app last active
 first_active = {} #when was the app first active
@@ -54,8 +54,8 @@ def screentime(current_app,start_time):
        app_counts[current_app] = 0
 
       #Get the last word and second last word from title string     
-      app_usage_last_word = FormatData(app_usage)[0]
-      app_usage_second_last_word = FormatData(app_usage)[1]
+      app_usage_last_word = FormatData(app_usage,k)[0]
+      app_usage_second_last_word = FormatData(app_usage,k)[1]
       
       #Last time an app was active
       last_active = LastSession(app_usage,current_app)
@@ -69,8 +69,8 @@ def screentime(current_app,start_time):
 
 
      
-      last_word = FormatData(app_usage)[3]
-      second_last_word = FormatData(app_usage)[2]
+      last_word = FormatData(app_usage,k)[3]
+      second_last_word = FormatData(app_usage,k)[2]
       ToJson(current_app, last_word, second_last_word)
       #DurMainApp(last_string,app_usage)
  
@@ -129,7 +129,7 @@ def DurMainApp(last_string,app_usage):
  
 
 #formatting data to extract main program and sub program
-def FormatData(app_usage):
+def FormatData(app_usage, k):
  
  second_last_string_array = []
 
@@ -156,11 +156,23 @@ def FormatData(app_usage):
 
 
   #get the last element from the word arrays for JSON formatting
+  
+ if k == 1:
   last_word = last_string_list[-1]
   second_last_word = second_last_string_array[-1]
+  
+  k = k + 1
 
 
+ else:
+   
+   last_word = last_string_list[last_string_list.index(last_word)]
+  
+ # if second_last_word in second_last_string_array:
+   second_last_word = second_last_string_array[second_last_string_array.index(second_last_word)]
 
+
+ 
  
     
 #getting rid of duplicates 
