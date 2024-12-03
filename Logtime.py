@@ -54,8 +54,8 @@ def screentime(current_app,start_time):
        app_counts[current_app] = 0
 
       #Get the last word and second last word from title string     
-      app_usage_last_word = FormatData(app_usage,k)[0]
-      app_usage_second_last_word = FormatData(app_usage,k)[1]
+      app_usage_last_word = FormatData(current_app,app_usage,k)[0]
+      app_usage_second_last_word = FormatData(current_app, app_usage,k)[1]
       
       #Last time an app was active
       last_active = LastSession(app_usage,current_app)
@@ -69,11 +69,16 @@ def screentime(current_app,start_time):
 
 
      
-      last_word = FormatData(app_usage,k)[3]
-      second_last_word = FormatData(app_usage,k)[2]
-      ToJson(current_app, last_word, second_last_word)
-      #DurMainApp(last_string,app_usage)
- 
+      last_word = FormatData(current_app,app_usage,k)[3]
+      second_last_word = FormatData(current_app, app_usage,k)[2]
+     
+      FormatData(current_app,app_usage,k)
+
+      sub_app = FormatData(current_app,app_usage,k)[4]
+      main_app = FormatData(current_app,app_usage,k)[5]
+      ToJson(current_app, last_word, second_last_word, sub_app, main_app)
+
+     
 
             
 #suspend program for 1000ms to not overload CPU
@@ -129,7 +134,7 @@ def DurMainApp(last_string,app_usage):
  
 
 #formatting data to extract main program and sub program
-def FormatData(app_usage, k):
+def FormatData(current_app, app_usage, k):
  
  second_last_string_array = []
 
@@ -161,15 +166,16 @@ def FormatData(app_usage, k):
   last_word = last_string_list[-1]
   second_last_word = second_last_string_array[-1]
   
-  k = k + 1
 
+ splitter = current_app.split("-")
+ sub_app = splitter[1]
+ main_app = splitter[2]
+ 
 
- else:
+ 
+
    
-   last_word = last_string_list[last_string_list.index(last_word)]
-  
- # if second_last_word in second_last_string_array:
-   second_last_word = second_last_string_array[second_last_string_array.index(second_last_word)]
+
 
 
  
@@ -180,7 +186,7 @@ def FormatData(app_usage, k):
  no_dupes_second_last_list = list(set(second_last_string_array))
 
 
- return no_dupes_last_list, no_dupes_second_last_list, second_last_word, last_word
+ return no_dupes_last_list, no_dupes_second_last_list, second_last_word, last_word, sub_app, main_app
 
 def printf(app_usage, app_counts, app_usage_last_word,app_usage_second_last_word,last_active,first_active):
   print(f"Apps that have run:\n")
@@ -203,20 +209,21 @@ def printf(app_usage, app_counts, app_usage_last_word,app_usage_second_last_word
   print('-----------------------------')
 
 #converts the current app's parameters into a JSON dictionary file
-def ToJson(current_app, last_word, second_last_word):
+def ToJson(current_app, last_word, second_last_word,sub_app,main_app):
  
  per_appdata ={
    
     "window": current_app,  
-    "main app": last_word,
-    "sub app": second_last_word,
+    "main app": main_app,
+    "sub app": sub_app,
     "total_duration - window": app_usage[current_app],
-    "total_duation - main app"
-    "total_duration sub app"
     "first active": first_active[current_app],
     "last active": last_active[current_app],
     "times opened": app_counts[current_app]
 }
+
+#"total_duation - main app"
+    #"total_duration sub app"
 
  per_appdata_json= json.dumps(per_appdata, indent = 4 ) 
 
