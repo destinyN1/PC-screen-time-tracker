@@ -180,6 +180,10 @@ def FormatData(current_app, app_usage, k):
  main_app = splitter[2]
  
 
+ '''
+NEED TO FIX ISSUE WITH DISCORD CAUSING OUT OF BOUNDS ERROR
+'''
+
     
 #getting rid of duplicates 
  no_dupes_last_list= list(set(last_string_list)) 
