@@ -3,7 +3,7 @@ import win32gui
 import pprint
 from datetime import datetime, timezone
 import json
-from DataBase import init_db, update_database
+from DataBase import init_db, update_database,update_durations
 
 k = 1
 durmainapp = {}
@@ -74,10 +74,13 @@ def screentime(current_app,start_time,):
       sub_app = FormatData(current_app,app_usage,k)[4]
       main_app = FormatData(current_app,app_usage,k)[5]
 
-      Durmain = DurMainApp(main_app)
+      Durmain = DurMainAppSubApp(main_app,sub_app)[0]
+      Dursub = DurMainAppSubApp(main_app,sub_app)[1]
 
-      ToJson(current_app, last_word, second_last_word, sub_app, main_app,Durmain)
-
+      ToJson(current_app, last_word, second_last_word, sub_app, main_app,Durmain,Dursub)
+      
+      update_durations(main_app=main_app, new_durmain=Durmain)
+      update_durations(sub_app=sub_app, new_dursub=Dursub)
      
             
 #suspend program for 1000ms to not overload CPU
@@ -128,15 +131,19 @@ def FirstSesion(current_app):
 
 
 
-def DurMainApp(main_app):
+def DurMainAppSubApp(main_app,sub_app):
  
  search_key = main_app
-
  values = [val for key, val in app_usage.items() if search_key in key  ]  
-
  Durmain = sum(values)
+ 
+ search_key = sub_app
+ values = [val for key, val in app_usage.items() if search_key in key  ]  
+ Dursub = sum(values)
 
- return Durmain
+ 
+
+ return Durmain,Dursub
  
    
  
@@ -238,7 +245,7 @@ def printf(app_usage, app_counts, app_usage_last_word,app_usage_second_last_word
 
 
 #converts the current app's parameters into a JSON dictionary file
-def ToJson(current_app, last_word, second_last_word,sub_app,main_app,Durmain):
+def ToJson(current_app, last_word, second_last_word,sub_app,main_app,Durmain,Dursub):
  
  per_appdata ={
    
@@ -247,6 +254,7 @@ def ToJson(current_app, last_word, second_last_word,sub_app,main_app,Durmain):
     "sub app": sub_app,
     "total_duration - window": app_usage[current_app],
     "Durmain":Durmain,
+    "Dursub": Dursub, 
     "first active": first_active[current_app],
     "last active": last_active[current_app],
     "times opened": app_counts[current_app]
@@ -258,6 +266,7 @@ def ToJson(current_app, last_word, second_last_word,sub_app,main_app,Durmain):
         sub_app=sub_app,
         total_duration=app_usage[current_app],
         Durmain = Durmain,
+        Dursub = Dursub,
         first_active=first_active[current_app],
         last_active=last_active[current_app],
         times_opened=app_counts[current_app]
