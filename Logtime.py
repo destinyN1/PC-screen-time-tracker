@@ -2,8 +2,8 @@ import time
 import win32gui
 import pprint
 from datetime import datetime, timezone
-from DataBase import init_db, update_db
 import json
+from DataBase import init_db, update_database
 
 k = 1
 durmainapp = {}
@@ -237,6 +237,16 @@ def ToJson(current_app, last_word, second_last_word,sub_app,main_app):
     "last active": last_active[current_app],
     "times opened": app_counts[current_app]
 }
+ 
+ update_database(
+        current_app=current_app,
+        main_app=main_app,
+        sub_app=sub_app,
+        total_duration=app_usage[current_app],
+        first_active=first_active[current_app],
+        last_active=last_active[current_app],
+        times_opened=app_counts[current_app]
+    )
 
 #"total_duation - main app"
     #"total_duration sub app"
@@ -262,5 +272,5 @@ safe_pprint = SafePrettyPrinter()
 
      
 if __name__ == "__main__":
- #init_db()
+ init_db()
  main()
