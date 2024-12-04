@@ -18,7 +18,7 @@ def init_db():
             first_active TEXT,
             last_active TEXT,
             times_opened INTEGER,
-            PRIMARY KEY (current_app, main_app, sub_app)
+            PRIMARY KEY (current_app, main_app, sub_app, first_active)
         )
     ''')
     connection.commit()
@@ -28,17 +28,31 @@ def init_db():
 def update_database(current_app, main_app, sub_app, total_duration, first_active, last_active, times_opened):
     """
     Updates the screentime table with the provided data.
-    If a record with the same primary keys (current_app, main_app, sub_app) exists, it will be replaced.
+    - Preserves first_active for existing records.
+    - Updates all other fields if a record with the same window, main_app, and sub_app exists.
     """
     connection = sqlite3.connect('screentime.db')
     cursor = connection.cursor()
 
+    # Insert new record if it doesn't exist
     cursor.execute('''
-        INSERT OR REPLACE INTO screentime 
-        (current_app, main_app, sub_app, total_duration_window, first_active, last_active, times_opened)
+        INSERT OR IGNORE INTO screentime 
+        (current_app, main_app, sub_app, first_active, total_duration_window, last_active, times_opened)
         VALUES (?, ?, ?, ?, ?, ?, ?)
-    ''', (current_app, main_app, sub_app, total_duration, first_active, last_active, times_opened))
+    ''', (current_app, main_app, sub_app, first_active, total_duration, last_active, times_opened))
+
+    # Update existing record's fields, excluding first_active
+    cursor.execute('''
+        UPDATE screentime
+        SET total_duration_window = ?,
+            last_active = ?,
+            times_opened = ?
+        WHERE current_app = ? AND main_app = ? AND sub_app = ?
+    ''', (total_duration, last_active, times_opened, current_app, main_app, sub_app))
 
     connection.commit()
     connection.close()
-    print(f"Updated database for window '{current_app}', main app '{main_app}', sub app '{sub_app}'.")
+
+    # Debug message
+    #print(f"Updated database for window '{current_app}', main app '{main_app}', sub app '{sub_app}', preserving first_active.")
+

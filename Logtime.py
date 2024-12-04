@@ -190,9 +190,7 @@ def FormatData(current_app, app_usage, k):
    main_app = splitter[2]
  
 
- '''
-NEED TO FIX ISSUE WITH DISCORD CAUSING OUT OF BOUNDS ERROR
-'''
+ 
 
     
 #getting rid of duplicates 
