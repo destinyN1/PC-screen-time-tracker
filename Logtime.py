@@ -36,7 +36,7 @@ def get_active_window():
 
 
 
-def screentime(current_app,start_time):
+def screentime(current_app,start_time,):
 
  while True:
    new_app = get_active_window()
@@ -67,15 +67,18 @@ def screentime(current_app,start_time):
 
       last_word = FormatData(current_app,app_usage,k)[3]
       second_last_word = FormatData(current_app, app_usage,k)[2]
-     
+      
       FormatData(current_app,app_usage,k)
 
+      
       sub_app = FormatData(current_app,app_usage,k)[4]
       main_app = FormatData(current_app,app_usage,k)[5]
-      ToJson(current_app, last_word, second_last_word, sub_app, main_app)
+
+      Durmain = DurMainApp(main_app)
+
+      ToJson(current_app, last_word, second_last_word, sub_app, main_app,Durmain)
 
      
-
             
 #suspend program for 1000ms to not overload CPU
       time.sleep(1)
@@ -125,13 +128,15 @@ def FirstSesion(current_app):
 
 
 
-def DurMainApp(last_string,app_usage):
+def DurMainApp(main_app):
  
- search_key = last_string
+ search_key = main_app
 
  values = [val for key, val in app_usage.items() if search_key in key  ]  
 
- print(sum(values))
+ Durmain = sum(values)
+
+ return Durmain
  
    
  
@@ -233,7 +238,7 @@ def printf(app_usage, app_counts, app_usage_last_word,app_usage_second_last_word
 
 
 #converts the current app's parameters into a JSON dictionary file
-def ToJson(current_app, last_word, second_last_word,sub_app,main_app):
+def ToJson(current_app, last_word, second_last_word,sub_app,main_app,Durmain):
  
  per_appdata ={
    
@@ -241,6 +246,7 @@ def ToJson(current_app, last_word, second_last_word,sub_app,main_app):
     "main app": main_app,
     "sub app": sub_app,
     "total_duration - window": app_usage[current_app],
+    "Durmain":Durmain,
     "first active": first_active[current_app],
     "last active": last_active[current_app],
     "times opened": app_counts[current_app]
@@ -251,6 +257,7 @@ def ToJson(current_app, last_word, second_last_word,sub_app,main_app):
         main_app=main_app,
         sub_app=sub_app,
         total_duration=app_usage[current_app],
+        Durmain = Durmain,
         first_active=first_active[current_app],
         last_active=last_active[current_app],
         times_opened=app_counts[current_app]
