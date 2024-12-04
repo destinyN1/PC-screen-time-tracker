@@ -176,8 +176,18 @@ def FormatData(current_app, app_usage, k):
   
 
  splitter = current_app.split("-")
- sub_app = splitter[1]
- main_app = splitter[2]
+
+ if len(splitter) == 2:
+  sub_app = splitter[0]
+  main_app = splitter[1]
+
+ elif len(splitter) == 1:
+   sub_app = splitter[0]
+   main_app = splitter[0]
+
+ elif len(splitter) == 3: 
+   sub_app = splitter[1]
+   main_app = splitter[2]
  
 
  '''
