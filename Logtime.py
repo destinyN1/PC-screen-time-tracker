@@ -81,6 +81,8 @@ def screentime(current_app,start_time,):
       
       update_durations(main_app=main_app, new_durmain=Durmain)
       update_durations(sub_app=sub_app, new_dursub=Dursub)
+
+      GetMainCount(app_counts,current_app)
      
             
 #suspend program for 1000ms to not overload CPU
@@ -100,6 +102,49 @@ def screentime(current_app,start_time,):
 
 
 
+def GetMainCount(app_counts,current_app):
+  splitter = current_app.split("-")
+  
+  try:
+   second = Splitter(splitter)[1]
+   first = Splitter(splitter)[0]
+
+   print(second , first)
+
+  except TypeError as e:
+    print(e)
+
+    first = current_app
+    second = first
+
+  finally:
+    print(first,second)
+      
+
+
+
+
+
+  
+ 
+
+
+#lil method that makes my life easy
+def Splitter(splitter):
+
+  if len(splitter) == 2:
+     second = splitter[0]
+     first= splitter[1]
+
+  elif len(splitter) == 1:
+    second = splitter[0]
+    first = second
+
+  elif len(splitter) == 3: 
+    second = splitter[1]
+    first = splitter[2]
+    
+    return first, second
 
 
 
