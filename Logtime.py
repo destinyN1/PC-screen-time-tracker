@@ -12,6 +12,7 @@ first_active = {} #when was the app first active
 app_usage = {} #dictionary that tracks app usage
 start_time = time.time() # start time of programme
 app_counts = {} #how many times has has the app been opened
+countsmain ={}
 
 #main program and sub program
 app_usage_last_word = {}
@@ -119,7 +120,9 @@ def GetMainCount(app_counts,current_app):
 
   finally:
     print(first,second)
-      
+  
+
+  
 
 
 
