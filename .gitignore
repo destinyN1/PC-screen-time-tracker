@@ -1,2 +1,12 @@
+# Virtual environments
+venv/
+.venv/
+env/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Local data written by the tracker
 screentime
-C:\Users\desti\Programming\App\appdev/
+screentime.db

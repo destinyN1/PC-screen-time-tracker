@@ -69,7 +69,7 @@ pip install pywin32 pynput
 
 3. Run the application:
 ```bash
-python main.py
+python Logtime.py
 ```
 
 ## Usage
@@ -77,7 +77,7 @@ python main.py
 ### Starting the Tracker
 
 ```bash
-python main.py
+python Logtime.py
 ```
 
 The application will:
@@ -129,11 +129,12 @@ The application provides several analysis features:
 
 ```
 PC-screen-time-tracker/
-├── main.py              # Main application logic and window monitoring
+├── Logtime.py           # Main application logic and window monitoring
 ├── DataBase.py          # Database operations and SQLite management
-├── screentime.db        # SQLite database (created automatically)
+├── GUI.py               # Placeholder for a PyQt6 interface (not built yet)
+├── screentime.db        # SQLite database (created automatically, not committed)
 ├── requirements.txt     # Python dependencies
-└── README.md           # Project documentation
+└── README.md            # Project documentation
 ```
 
 ## Technical Details
